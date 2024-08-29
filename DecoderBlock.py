@@ -19,7 +19,7 @@ class DecoderBlock(nn.Module):
         self.selfAttentionBlock = selfAttentionBlock
         self.crossAttentionBlock = crossAttentionBlock
         self.feedForwardBlock = feedForwardBlock
-        self.residualConnection = nn.Module(
+        self.residualConnection = nn.ModuleList(
             [ResidualConnection(dropout) for _ in range(3)]
         )
 
