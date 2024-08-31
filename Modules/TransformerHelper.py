@@ -1,16 +1,16 @@
 import torch as tc
 import torch.nn as nn
-import Transformer
-import InputEmbedding
-import PositionalEncoding
-import FeedForwardBlock
-import ResidualConnection
-import EncoderBlock
-import DecoderBlock
-import Encoder
-import Decoder
-import Transformer
-import MultiHeadAttentionBlock
+from . import Transformer
+from . import InputEmbedding
+from . import PositionalEncoding
+from . import FeedForwardBlock
+from . import ResidualConnection
+from . import EncoderBlock
+from . import DecoderBlock
+from . import Encoder
+from . import Decoder
+from . import Transformer
+from . import MultiHeadAttentionBlock
 
 
 def createTranslationTransformer(

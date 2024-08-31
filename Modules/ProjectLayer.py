@@ -1,6 +1,6 @@
 import torch as tc
 import torch.nn as nn
-import LayerNormalization
+from . import LayerNormalization
 
 class ProjectLayer(nn.Module):
     

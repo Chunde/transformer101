@@ -1,11 +1,11 @@
 import torch as tc
 import torch.nn as nn
-import LayerNormalization
-import Encoder
-import Decoder
-import InputEmbedding
-import PositionalEncoding
-import ProjectLayer
+from . import LayerNormalization
+from . import Encoder
+from . import Decoder
+from . import InputEmbedding
+from . import PositionalEncoding
+from . import ProjectLayer
 
 
 class Transformer(nn.Module):

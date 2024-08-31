@@ -22,8 +22,8 @@ lr = 1e-4
 
 
 def getAllSentence(dataset, split, lang):
-    for item in dataset:
-        yield item[split]["translation"][lang]
+    for item in dataset[split]["translation"]:
+        yield item[lang]
 
 
 def getTokenizer(dataset, split, lang):
@@ -44,7 +44,7 @@ def getTokenizer(dataset, split, lang):
 
 def loadDataset():
     # we download everything, to only download train data
-    dataset = load_dataset("opus100", "{sourceLang}-{targetLang}")
+    dataset = load_dataset("opus100", f"{sourceLang}-{targetLang}")
     print(dataset)
     trainingDataset = dataset["train"]
     validationDataset = dataset["validation"]

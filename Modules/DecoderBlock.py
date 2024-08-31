@@ -1,9 +1,8 @@
 import torch as tc
 import torch.nn as nn
-import LayerNormalization
-import MultiHeadAttentionBlock
-import FeedForwardBlock
-import ResidualConnection
+from . import MultiHeadAttentionBlock
+from . import FeedForwardBlock
+from . import ResidualConnection
 
 
 class DecoderBlock(nn.Module):

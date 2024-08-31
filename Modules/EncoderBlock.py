@@ -1,10 +1,8 @@
 import torch as tc
 import torch.nn as nn
-import math
-import LayerNormalization
-import MultiHeadAttentionBlock
-import FeedForwardBlock
-import ResidualConnection
+from . import MultiHeadAttentionBlock
+from . import FeedForwardBlock
+from . import ResidualConnection
 
 class EncodeBlock(nn.Module):
     

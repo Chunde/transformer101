@@ -1,6 +1,5 @@
 import torch as tc
 import torch.nn as nn
-import math
    
 # x dims = (batch size, sequence length, d_model)   
 class FeedForwardBlock(nn.Module):
