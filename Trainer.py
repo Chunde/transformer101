@@ -7,7 +7,7 @@ from tokenizers.models import WordLevel
 from tokenizers.trainers import WordLevelTrainer
 from tokenizers.pre_tokenizers import Whitespace
 from pathlib import Path
-import BilingualDataset
+from BilingualDataset import BilingualDataset
 from Modules.TransformerHelper import createTranslationTransformer
 from torch.utils.tensorboard import SummaryWriter
 import tqdm
