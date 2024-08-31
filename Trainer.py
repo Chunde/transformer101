@@ -40,7 +40,7 @@ def getTokenizer(dataset, split, lang):
         tokenizer.save(str(tokenizersPath))
     else:
         tokenizer = Tokenizer.from_file(str(tokenizersPath))
-
+    return tokenizer
 
 def loadDataset():
     # we download everything, to only download train data
