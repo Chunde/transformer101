@@ -4,7 +4,7 @@ from . import MultiHeadAttentionBlock
 from . import FeedForwardBlock
 from . import ResidualConnection
 
-class EncodeBlock(nn.Module):
+class EncoderBlock(nn.Module):
     
     def __init__(self,
                  attentionBlock: MultiHeadAttentionBlock,

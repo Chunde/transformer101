@@ -1,16 +1,16 @@
 import torch as tc
 import torch.nn as nn
 from . import Transformer
-from . import InputEmbedding
-from . import PositionalEncoding
-from . import FeedForwardBlock
-from . import ResidualConnection
-from . import EncoderBlock
-from . import DecoderBlock
-from . import Encoder
-from . import Decoder
-from . import Transformer
-from . import MultiHeadAttentionBlock
+from .InputEmbedding import InputEmbedding
+from .PositionalEncoding import PositionalEncoding
+from .FeedForwardBlock import FeedForwardBlock
+from .ResidualConnection import ResidualConnection
+from .EncoderBlock import EncoderBlock
+from .DecoderBlock import DecoderBlock
+from .Encoder import Encoder
+from .Decoder import Decoder
+from .Transformer import Transformer
+from .MultiHeadAttentionBlock import MultiHeadAttentionBlock
 
 
 def createTranslationTransformer(
@@ -32,7 +32,7 @@ def createTranslationTransformer(
 
     encoderBlocks = []
 
-    for _ in N:
+    for _ in range(N):
         selfAttentionBlock = MultiHeadAttentionBlock(d_model, h, dropout)
         feedForwardBlock = FeedForwardBlock(d_model, d_ff, dropout)
 

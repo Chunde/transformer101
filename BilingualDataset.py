@@ -12,9 +12,9 @@ class BilingualDataset(Dataset):
         self.targetTokenizer = targetTokenizer
         self.sourceLang = sourceLang
         self.targetLang = targetLang
-        self.sosToken = tc.Tensor([sourceTokenizer.token_to_id('[SOS]')], dtype=tc.int64)
-        self.eosToken = tc.Tensor([sourceTokenizer.token_to_id('[EOS]')], dtype=tc.int64)
-        self.padToken = tc.Tensor([sourceTokenizer.token_to_id('[PAD]')], dtype=tc.int64)
+        self.sosToken = tc.tensor([sourceTokenizer.token_to_id('[SOS]')], dtype=tc.int64)
+        self.eosToken = tc.tensor([sourceTokenizer.token_to_id('[EOS]')], dtype=tc.int64)
+        self.padToken = tc.tensor([sourceTokenizer.token_to_id('[PAD]')], dtype=tc.int64)
         self.sequenceLen = sequenceLen
         
     def __len__(self):

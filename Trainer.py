@@ -12,7 +12,7 @@ from Modules.TransformerHelper import createTranslationTransformer
 from torch.utils.tensorboard import SummaryWriter
 import tqdm
 
-sequenceLength = 1000
+sequenceLength = 42976
 sourceLang = "en"
 targetLang = "zh"
 modelSize = 512
@@ -68,18 +68,18 @@ def loadDataset():
         sequenceLength,
     )
 
-    maxSourceLen = 0
-    maxTargetLen = 0
-    for item in trainingDataset:
-        sourceIds = sourceTrainTokenizer.encode(item["translation"][sourceLang]).ids
-        targetIds = targetTrainTokenizer.encode(item["translation"][targetLang]).ids
-        maxSourceLen = max(maxSourceLen, len(sourceIds))
-        maxTargetLen = max(maxTargetLen, len(targetIds))
+    # maxSourceLen = 0
+    # maxTargetLen = 0
+    # for item in trainingDataset:
+    #     sourceIds = sourceTrainTokenizer.encode(item["translation"][sourceLang]).ids
+    #     targetIds = targetTrainTokenizer.encode(item["translation"][targetLang]).ids
+    #     maxSourceLen = max(maxSourceLen, len(sourceIds))
+    #     maxTargetLen = max(maxTargetLen, len(targetIds))
 
-    print(f"max source and target sentence length are: {maxSourceLen}, {maxTargetLen}")
+    # print(f"max source and target sentence length are: {maxSourceLen}, {maxTargetLen}")
 
-    trainDataLoader = DataLoader(trainingDataset, batch_size=batchSize, shuffle=True)
-    validationDataLoader = DataLoader(validationDataset, batch_size=1, shuffle=True)
+    trainDataLoader = DataLoader(trainDatasetInput, batch_size=batchSize, shuffle=True)
+    validationDataLoader = DataLoader(validationDatasetInput, batch_size=1, shuffle=True)
     
     return trainDataLoader, validationDataLoader, sourceTrainTokenizer, targetTrainTokenizer
 
