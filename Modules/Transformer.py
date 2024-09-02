@@ -1,11 +1,11 @@
 import torch as tc
 import torch.nn as nn
-from . import LayerNormalization
-from . import Encoder
-from . import Decoder
-from . import InputEmbedding
-from . import PositionalEncoding
-from . import ProjectLayer
+from .LayerNormalization import LayerNormalization
+from .Encoder import Encoder
+from .Decoder import Decoder
+from .InputEmbedding import InputEmbedding
+from .PositionalEncoding import PositionalEncoding
+from .ProjectLayer import ProjectLayer
 
 
 class Transformer(nn.Module):
@@ -20,6 +20,7 @@ class Transformer(nn.Module):
         targetPosition: PositionalEncoding,
         projectLayer: ProjectLayer,
     ):
+        super().__init__()
         self.encoder = encoder
         self.decoder = decoder
         self.sourceEmbedding = sourceEmbedding

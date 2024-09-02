@@ -7,8 +7,8 @@ class LayerNormalization(nn.Module):
     def __init__(self, eps: float = 10**-6) -> None:
         super().__init__()
         self.eps = eps
-        self.alpha = nn.parameter(tc.ones(1))
-        self.bias = nn.parameter(tc.zeros(1))
+        self.alpha = nn.Parameter(tc.ones(1))
+        self.bias = nn.Parameter(tc.zeros(1))
 
     def forward(self, x):
         mean = x.mean(dim=-1, keepdim=True)

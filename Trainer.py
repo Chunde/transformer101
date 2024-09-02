@@ -10,7 +10,7 @@ from pathlib import Path
 from BilingualDataset import BilingualDataset
 from Modules.TransformerHelper import createTranslationTransformer
 from torch.utils.tensorboard import SummaryWriter
-import tqdm
+from tqdm import tqdm
 
 sequenceLength = 42976
 sourceLang = "en"
@@ -103,7 +103,7 @@ def trainModel():
     
     writer = SummaryWriter("TS101")
     
-    optimizer = tc.optim.Adam(model.parameter(), lr=lr, eps=1e-9)
+    optimizer = tc.optim.Adam(model.parameters(), lr=lr, eps=1e-9)
     
     initial_epoch = 0
     global_step = 0

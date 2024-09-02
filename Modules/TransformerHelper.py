@@ -11,7 +11,7 @@ from .Encoder import Encoder
 from .Decoder import Decoder
 from .Transformer import Transformer
 from .MultiHeadAttentionBlock import MultiHeadAttentionBlock
-
+from .ProjectLayer import ProjectLayer
 
 def createTranslationTransformer(
     sourceVocabSize: int,
@@ -40,7 +40,7 @@ def createTranslationTransformer(
         encoderBlocks.append(encoderBlock)
 
     decoderBlocks = []
-    for _ in N:
+    for _ in range(N):
         selfAttentionBlock = MultiHeadAttentionBlock(d_model, h, dropout)
         crossAttentionBlock = MultiHeadAttentionBlock(d_model, h, dropout)
         feedForwardBlock = FeedForwardBlock(d_model, d_ff, dropout)
@@ -52,7 +52,7 @@ def createTranslationTransformer(
     encoder = Encoder(nn.ModuleList(encoderBlocks))
     decoder = Decoder(nn.ModuleList(decoderBlocks))
 
-    projectLayer = projectLayer(d_model, targetVocabSize)
+    projectLayer = ProjectLayer(d_model, targetVocabSize)
 
     transformer = Transformer(
         encoder,
