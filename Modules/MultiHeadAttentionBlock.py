@@ -27,7 +27,7 @@ class MultiHeadAttentionBlock(nn.Module)    :
         # (batch, sequence, dim of embedding) -> (batch, sequence, h, d_k) - > (batch, h, seq, dk)
         q_prime = q_prime.view(q_prime.shape[0], q_prime.shape[1], self.h, self.d_k).transpose(1,2)
         k_prime = k_prime.view(k_prime.shape[0], k_prime.shape[1], self.h, self.d_k).transpose(1,2)
-        v_prime = q_prime.view(v_prime.shape[0], v_prime.shape[1], self.h, self.d_k).transpose(1,2)
+        v_prime = v_prime.view(v_prime.shape[0], v_prime.shape[1], self.h, self.d_k).transpose(1,2)
         
         # batch,h seq, dk --> batch, h, seq, seq
         # this operation should be very cautious--23:22

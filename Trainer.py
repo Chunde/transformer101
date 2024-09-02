@@ -12,11 +12,11 @@ from Modules.TransformerHelper import createTranslationTransformer
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-sequenceLength = 42976
+sequenceLength = 350
 sourceLang = "en"
-targetLang = "zh"
+targetLang = "it"
 modelSize = 512
-batchSize = 128
+batchSize = 32
 epochNum = 20
 lr = 1e-4
 
@@ -44,10 +44,11 @@ def getTokenizer(dataset, split, lang):
 
 def loadDataset():
     # we download everything, to only download train data
-    dataset = load_dataset("opus100", f"{sourceLang}-{targetLang}")
+    # dataset = load_dataset("opus100", f"{sourceLang}-{targetLang}")
+    dataset = load_dataset("opus_books", f"{sourceLang}-{targetLang}")
     print(dataset)
     trainingDataset = dataset["train"]
-    validationDataset = dataset["validation"]
+    # validationDataset = dataset["validation"]
     sourceTrainTokenizer = getTokenizer(dataset, "train", sourceLang)
     targetTrainTokenizer = getTokenizer(dataset, "train", targetLang)
 
@@ -59,14 +60,14 @@ def loadDataset():
         targetLang,
         sequenceLength,
     )
-    validationDatasetInput = BilingualDataset(
-        validationDataset,
-        sourceTrainTokenizer,
-        targetTrainTokenizer,
-        sourceLang,
-        targetLang,
-        sequenceLength,
-    )
+    # validationDatasetInput = BilingualDataset(
+    #     validationDataset,
+    #     sourceTrainTokenizer,
+    #     targetTrainTokenizer,
+    #     sourceLang,
+    #     targetLang,
+    #     sequenceLength,
+    # )
 
     # maxSourceLen = 0
     # maxTargetLen = 0
@@ -79,9 +80,10 @@ def loadDataset():
     # print(f"max source and target sentence length are: {maxSourceLen}, {maxTargetLen}")
 
     trainDataLoader = DataLoader(trainDatasetInput, batch_size=batchSize, shuffle=True)
-    validationDataLoader = DataLoader(validationDatasetInput, batch_size=1, shuffle=True)
+    # validationDataLoader = DataLoader(validationDatasetInput, batch_size=1, shuffle=True)
     
-    return trainDataLoader, validationDataLoader, sourceTrainTokenizer, targetTrainTokenizer
+    # return trainDataLoader, validationDataLoader, sourceTrainTokenizer, targetTrainTokenizer
+    return trainDataLoader, sourceTrainTokenizer, targetTrainTokenizer
 
 def getModel(sourceVocabLen, targetVocabLen):
     model = createTranslationTransformer(
@@ -96,7 +98,8 @@ def trainModel():
     
     Path('model').mkdir(parents=True, exist_ok=True)
     
-    trainDataLoader, validationDataLoader, sourceTokenizer, targetTokenizer = loadDataset()
+    # trainDataLoader, validationDataLoader, sourceTokenizer, targetTokenizer = loadDataset()
+    trainDataLoader, sourceTokenizer, targetTokenizer = loadDataset()
     model = getModel(sourceTokenizer.get_vocab_size(), targetTokenizer.get_vocab_size()).to(device)
     
     #Tensor board
@@ -116,8 +119,8 @@ def trainModel():
         batchIterator = tqdm(trainDataLoader, desc=f'Processing epoch {epoch:02d}')
         
         for batch in batchIterator:
-            encoderInput = batch['encodeInput'].to(device)
-            decoderInput = batch['decodeInput'].to(device)
+            encoderInput = batch['encoderInput'].to(device)
+            decoderInput = batch['decoderInput'].to(device)
             encoderMask = batch['encoderMask'].to(device)
             decoderMask = batch['decoderMask'].to(device)
             

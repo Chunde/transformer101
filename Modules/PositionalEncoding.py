@@ -30,5 +30,7 @@ class PositionalEncoding(nn.Module):
         self.register_buffer('pe', pe) # save the pe as part of model
     
     def forward(self, x):
-        x = x + (self.pe[:, x.shape[1],:]).require_grad_(False) # this should be checked again
+        # meaning?
+        x = x + (self.pe[:, :x.shape[1],:]).requires_grad_(False) # this should be checked again
+        return x
         

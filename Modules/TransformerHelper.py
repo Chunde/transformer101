@@ -27,8 +27,8 @@ def createTranslationTransformer(
     sourceEmbedding = InputEmbedding(d_model, sourceVocabSize)
     targetEmbedding = InputEmbedding(d_model, targetVocabSize)
 
-    sourcePosition = PositionalEncoding(d_model, sourceVocabSize, dropout)
-    targetPosition = PositionalEncoding(d_model, targetVocabSize, dropout)
+    sourcePosition = PositionalEncoding(d_model, sourceSequenceLen, dropout)
+    targetPosition = PositionalEncoding(d_model, targetSequenceLen, dropout)
 
     encoderBlocks = []
 
