@@ -19,7 +19,7 @@ class MultiHeadAttentionBlock(nn.Module):
 
         self.w_o = nn.Linear(d_model, d_model)
 
-        self.dropout = dropout
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, q, k, v, mask):
         q_prime = self.w_q(q)
@@ -45,6 +45,8 @@ class MultiHeadAttentionBlock(nn.Module):
         if mask is not None:
             attention_score.masked_fill_(mask == 0, -1e9)
         self.attention_score = attention_score.softmax(dim=-1)
+        if self.dropout is not None:
+            self.attention_score = self.dropout(self.attention_score)
         # (batch, h, seq, seq) @ (batch,h, seq, d_k) -> (batch, h, seq, dk)
         x = attention_score @ v_prime
 

@@ -39,7 +39,9 @@ class BilingualDataset(Dataset):
         sourceTargetPair = self.dataset[index]
         sourceText = sourceTargetPair["translation"][self.sourceLang]
         targetText = sourceTargetPair["translation"][self.targetLang]
-
+        print(f"Source: {sourceText}")
+        print(f"Target: {targetText}")
+            
         encoderInputTokens = self.sourceTokenizer.encode(sourceText).ids
         decoderInputTokens = self.targetTokenizer.encode(targetText).ids
 
