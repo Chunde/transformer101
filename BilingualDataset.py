@@ -39,9 +39,9 @@ class BilingualDataset(Dataset):
         sourceTargetPair = self.dataset[index]
         sourceText = sourceTargetPair["translation"][self.sourceLang]
         targetText = sourceTargetPair["translation"][self.targetLang]
-        print(f"Source: {sourceText}")
-        print(f"Target: {targetText}")
-            
+        # print(f"Source: {sourceText}")
+        # print(f"Target: {targetText}")
+
         encoderInputTokens = self.sourceTokenizer.encode(sourceText).ids
         decoderInputTokens = self.targetTokenizer.encode(targetText).ids
 
@@ -81,16 +81,18 @@ class BilingualDataset(Dataset):
         assert encoderInput.size(0) == self.sequenceLen
         assert decoderInput.size(0) == self.sequenceLen
         assert label.size(0) == self.sequenceLen
-
+        encoderMask = (encoderInput != self.padToken).unsqueeze(0).unsqueeze(0).int()
+        # need to play with tensor view and slicing
+        # lot of to be learnt, or at least be comfortable
+        # with it and immediately know how to fix it
+        decoderMask = (decoderInput != self.padToken).unsqueeze(0).int() & causalMask(
+            decoderInput.size(0)
+        )
         return {
             "encoderInput": encoderInput,  # sequence length
             "decoderInput": decoderInput,  # sequence length
-            "encoderMask": (encoderInput != self.padToken)
-            .unsqueeze(0)   # need to play with tensor view and slicing
-            .unsqueeze(0)   # lot of to be learnt, or at least be comfortable
-            .int(),         # with it and immediately know how to fix it
-            "decoderMask": (decoderInput != self.padToken).unsqueeze(0).int()
-            & causalMask(decoderInput.size(0)),
+            "encoderMask": encoderMask,
+            "decoderMask": decoderMask,
             "label": label,
             "sourceText": sourceText,
             "targetText": targetText,
@@ -98,5 +100,6 @@ class BilingualDataset(Dataset):
 
 
 def causalMask(size):
-    mask = tc.triu(tc.ones(size, size), diagonal=1).type(tc.int)
+    # this function yield wrong shapes of mask that lead to error
+    mask = tc.triu(tc.ones((1, size, size)), diagonal=1).type(tc.int)
     return mask == 0

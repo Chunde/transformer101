@@ -16,7 +16,7 @@ sequenceLength = 350
 sourceLang = "en"
 targetLang = "it"
 modelSize = 512
-batchSize = 32
+batchSize = 8
 epochNum = 20
 lr = 1e-4
 

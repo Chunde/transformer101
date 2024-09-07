@@ -33,3 +33,4 @@ class DecoderBlock(nn.Module):
             ),
         )
         x = self.residualConnection[2](x, lambda x: self.feedForwardBlock(x))
+        return x
