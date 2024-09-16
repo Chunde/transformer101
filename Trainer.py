@@ -142,6 +142,14 @@ def trainModel():
             optimizer.step()
             optimizer.zero_grad()
             global_step += 1
+        
+        model_file_name = f"model/model_epoch_{epoch:02d}"
+        tc.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'global_step': global_step
+        }, model_file_name)
             
 if __name__ == '__main__':
     trainModel()
